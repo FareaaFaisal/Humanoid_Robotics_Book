@@ -1,6 +1,7 @@
+# Secrets
 .gemini/settings.json
-
 .env
+
 
 # Dependencies
 /node_modules
