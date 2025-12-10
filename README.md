@@ -1,4 +1,4 @@
-# Hackathon-1 
+# Hackathon-01 
 # Physical AI & Humanoid Robotics – Interactive Textbook  
 ### Built with Spec-Driven Development • Gemini-CLI • Docusaurus  
 #### By **Fareaa Faisal**
