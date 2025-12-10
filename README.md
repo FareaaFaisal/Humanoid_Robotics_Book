@@ -12,7 +12,8 @@
 This project was built for a hackathon where the requirement was to follow a strict **Spec-Driven Development (SDD)** workflow using:
 
 - **Gemini-CLI** for specification, architecture planning, file generation, and iterative refinement  
-- **Docusaurus** for the full documentation site and interactive learning experience  
+- **Docusaurus** for the full documentation site and interactive learning experience
+- **Integrated RAG + Cohere chatbot** for interactive Q&A with the textbook content  
 - **Modular, testable chapter structure** aligned with the spec-kit methodology  
 - **Modern UI/UX** created by **Fareaa Faisal** with polished layout, visuals, and content flow  
 
@@ -53,7 +54,15 @@ Designed entirely by **Fareaa Faisal**, the UI includes:
 - Soft color palettes  
 - Intuitive layout for modules and chapters  
 - Consistent visual hierarchy  
-- Smooth reading experience  
+- Smooth reading experience
+
+### 🔹 Integrated Chatbot (RAG + Cohere)  
+The textbook includes a **Retrieval-Augmented Generation (RAG) chatbot** powered by **Cohere**, enabling:
+
+- Interactive Q&A with textbook content  
+- Context-aware responses  
+- Seamless learning experience  
+- Integration directly into the Docusaurus site  
 
 ### 🔹 Robotics-Focused Content  
 Includes deeply technical chapters on:
@@ -95,6 +104,7 @@ This project was developed as part of a hackathon with the following constraints
 - Creation of a polished UI and UX
 - Clear technical breakdown for every module
 - End-to-end ROS 2 + AI robotics conceptual pipeline
+- Cohere API (RAG chatbot for interactive learning)
 
 ## 👩‍💻 Creator
 
