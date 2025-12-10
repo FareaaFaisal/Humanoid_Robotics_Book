@@ -9,6 +9,8 @@ const config: Config = {
   tagline: 'Unlock the future of intelligent machines: Master Humanoid Robotics, Physical AI, Simulation, and Next-Gen Autonomous Systems for a world where robots think, move, and act like us',
   favicon: 'img/favicon.ico',
 
+   clientModules: [require.resolve('./src/components/RAGChatbotWidget/index.tsx')],
+
   // Production URL and base URL for GitHub Pages
   url: 'https://fareaafaisal.github.io',
   baseUrl: '/hackathon-1/',

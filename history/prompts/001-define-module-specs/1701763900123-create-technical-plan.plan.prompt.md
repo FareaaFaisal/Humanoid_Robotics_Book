@@ -26,7 +26,35 @@ tests: -->
 
 ## Prompt
 
-/sp.plan (full text omitted for brevity)
+/sp.plan
+
+Create:
+- Docusaurus-based book architecture using MCP (Module Content Plan).  
+- Section structure for all modules and chapters within Docusaurus folders.  
+- Research approach for each module (primary sources, official docs, tutorials).  
+- Quality validation for content accuracy, technical reproducibility, and clarity.
+
+Decisions needing documentation:
+- Docusaurus version and theme selection tradeoffs.  
+- Folder and file naming conventions per module and chapter.  
+- Integration of code snippets, Mermaid diagrams, and images in Docusaurus.  
+- Navigation structure (sidebar, navbar, search) for MCP deployment.  
+- ROS 2, Gazebo/Unity, Isaac, and VLA content organization within docs/ and assets/.  
+
+Testing strategy:
+- Validate that Docusaurus renders all chapters with correct formatting.  
+- Verify sidebar, search, and internal links match MCP module mapping.  
+- Cross-check all technical content against /sp.spec success criteria.  
+- Test code snippets, diagrams, and URDF/ROS examples for clarity and reproducibility.  
+- Verify citations render correctly in Markdown/MDX.  
+
+Technical details:
+- Research-concurrent approach: research and write iteratively within Docusaurus MCP structure.  
+- APA-style citations as per /sp.constitution.  
+- Phases: Research → Foundation → Analysis → Synthesis → Capstone integration.  
+- Maintain modularity for ROS 2, simulation, AI brain, and VLA content for iterative updates.  
+- Include checklists for software/hardware setup and reproducibility within Docusaurus docs.
+
 
 ## Response snapshot
 

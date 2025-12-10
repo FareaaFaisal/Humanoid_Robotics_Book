@@ -1,4 +1,4 @@
----
+<!---
 id: 134094342001157359
 title: Build Docusaurus Book
 stage: green
@@ -20,7 +20,7 @@ files:
 - humanoid-robotics-book/build
 tests:
 
----
+--->
 
 ## Prompt
 

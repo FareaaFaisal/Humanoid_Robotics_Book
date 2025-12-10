@@ -2,6 +2,8 @@ import React from 'react';
 import Layout from '@theme/Layout';
 import Link from '@docusaurus/Link';
 import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
+import RAGChatbotWidget from '@site/src/components/RAGChatbotWidget';
+
 
 import styles from './index.module.css';
 
@@ -70,6 +72,12 @@ export default function Home() {
           </div>
         </div>
       </section>
+
+
+      {/* ========================= */}
+      {/* ADD THE CHATBOT HERE */}
+      <RAGChatbotWidget /> 
+      {/* ========================= */}
 
     </Layout>
   );

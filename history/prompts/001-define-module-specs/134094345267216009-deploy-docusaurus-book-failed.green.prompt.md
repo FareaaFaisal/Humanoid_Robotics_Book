@@ -1,4 +1,4 @@
----
+<!---
 id: 134094345267216009
 title: Deploy Docusaurus Book (Failed)
 stage: green
@@ -20,7 +20,7 @@ files:
 - humanoid-robotics-book/docusaurus.config.ts
 tests:
 
----
+--->
 
 ## Prompt
 

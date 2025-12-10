@@ -1,0 +1,39 @@
+name: Deploy FastAPI Backend to Fly.io
+
+on:
+  push:
+    branches:
+      - main # Adjust this to your main branch
+    paths:
+      - 'backend/**' # Trigger only when changes are made in the backend/ directory
+
+jobs:
+  deploy:
+    name: Deploy to Fly.io
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: superfly/flyctl-actions/setup-flyctl@master
+      - uses: actions/setup-node@v4 # Needed for Docusaurus build, even if just backend
+        with:
+          node-version: 20
+      - name: Install Docusaurus dependencies (for potentially reading content)
+        run: npm install
+        working-directory: ./humanoid-robotics-book # Assuming Docusaurus is here
+        
+      # Add this step only if you want to rebuild Docusaurus on backend changes
+      # - name: Build Docusaurus site
+      #   run: npm run build
+      #   working-directory: ./humanoid-robotics-book
+
+      - name: Deploy to Fly.io
+        run: flyctl deploy --remote-only
+        working-directory: ./backend # Deploy from the backend directory
+        env:
+          FLY_API_TOKEN: ${{ secrets.FLY_API_TOKEN }}
+          COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
+          QDRANT_HOST: ${{ secrets.QDRANT_HOST }}
+          QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}
+          LLM_API_KEY: ${{ secrets.LLM_API_KEY }}
+          LLM_MODEL_NAME: ${{ secrets.LLM_MODEL_NAME }}
+          FRONTEND_URL: ${{ secrets.FRONTEND_URL }} # Pass frontend URL to backend for CORS

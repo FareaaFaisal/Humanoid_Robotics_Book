@@ -1,0 +1,150 @@
+.chatbotContainer {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 350px;
+  z-index: 9999;
+  font-family: Arial, sans-serif;
+}
+
+.toggleButton {
+  background: linear-gradient(135deg, #6c63ff, #00d4ff);
+  color: white;
+  font-weight: bold;
+  padding: 12px 20px;
+  border: none;
+  border-radius: 30px;
+  cursor: pointer;
+  box-shadow: 0 6px 15px rgba(0,0,0,0.2);
+  transition: all 0.3s ease;
+  font-size: 16px;
+}
+
+.toggleButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 20px rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, #00d4ff, #6c63ff);
+}
+
+.toggleButton:focus {
+  outline: none;
+  box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.5);
+}
+
+.chatWindow {
+  width: 100%;
+  height: 400px;
+  border: 1px solid #ccc;
+  background: #fff;
+  display: flex;
+  flex-direction: column;
+  margin-top: 5px;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+}
+
+.messagesContainer {
+  flex: 1;
+  overflow-y: auto;
+  padding: 10px;
+  background-color: #f9f9f9;
+}
+
+.message {
+  margin-bottom: 8px;
+  padding: 5px 8px;
+  border-radius: 4px;
+  word-break: break-word;
+}
+
+.message.user {
+  background-color: #e6f0ff;
+  color: #004085;
+  text-align: left;
+}
+
+.message.assistant {
+  background-color: #e2ffe2;
+  color: #155724;
+  text-align: left;
+}
+
+.inputContainer {
+  display: flex;
+  border-top: 1px solid #ccc;
+}
+
+.inputContainer input {
+  flex: 1;
+  padding: 5px;
+  border: none;
+  outline: none;
+}
+
+.inputContainer button {
+  padding: 5px 10px;
+  cursor: pointer;
+  border: none;
+  background-color: #007bff;
+  color: white;
+}
+
+.selectedTextPrompt {
+  padding: 5px 10px;
+  background-color: #fff3cd;
+  color: #856404;
+  font-size: 12px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Input field */
+.inputContainer input {
+  flex: 1;
+  padding: 10px 15px;
+  border: none;
+  border-radius: 25px;
+  outline: none;
+  font-size: 14px;
+  background: #ffffff;          /* White background for good contrast */
+  color: #333333;               /* Dark text for visibility */
+  box-shadow: inset 0 2px 5px rgba(0,0,0,0.1);
+  transition: all 0.2s ease;
+}
+
+.inputContainer input::placeholder {
+  color: #888888;               /* Subtle gray for placeholder */
+}
+
+.inputContainer input:focus {
+  box-shadow: 0 0 0 2px rgba(108, 99, 255, 0.3);
+}
+
+/* Send button */
+.inputContainer button {
+  padding: 10px 18px;
+  border: none;
+  border-radius: 25px;
+  background: linear-gradient(135deg, #6c63ff, #00d4ff);
+  color: #ffffff;                /* Ensure text is white */
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+}
+
+.inputContainer button:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 6px 16px rgba(0,0,0,0.25);
+  background: linear-gradient(135deg, #00d4ff, #6c63ff);
+}
+
+.inputContainer button:disabled {
+  background: #cccccc;
+  color: #666666;               /* Make disabled text readable */
+  cursor: not-allowed;
+  box-shadow: none;
+}
+

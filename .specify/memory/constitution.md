@@ -1,11 +1,8 @@
 <!--
 Sync Impact Report:
-- Version: 0.0.0 → 1.0.0
+- Version: 1.0.0 → 1.1.0
 - Added Sections:
-  - Core Principles
-  - Content and Format Standards
-  - Success Criteria
-  - Governance
+  - V. Chapter Translation
 - Templates requiring updates:
   - ⚠ .specify/templates/plan-template.md
   - ⚠ .specify/templates/spec-template.md
@@ -26,6 +23,9 @@ Provide reproducible engineering details, including algorithms, diagrams, and ha
 
 ### IV. Clear Scope
 Clearly distinguish between the current state-of-the-art and future/conceptual ideas. All claims MUST be verified with sources. Rationale: Prevents confusion and manages reader expectations.
+
+### V. Chapter Translation
+The book MUST support chapter translation using the Context7 MCP for translation. All API keys MUST be handled securely and not exposed in the frontend. Translations MUST preserve the original MDX structure and code blocks. User translation events SHOULD be tracked for analytics (localStorage is acceptable). Rationale: Makes the book accessible to a wider, global audience.
 
 ## Content and Format Standards
 
@@ -54,4 +54,4 @@ Clearly distinguish between the current state-of-the-art and future/conceptual i
 
 This constitution is the single source of truth for project standards and principles. All development artifacts, including specifications, plans, and code, MUST adhere to it. The project will follow the Spec-Kit Plus workflow (spec → draft → refine → final).
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-05 | **Last Amended**: 2025-12-05
+**Version**: 1.1.0 | **Ratified**: 2025-12-05 | **Last Amended**: 2025-12-07
