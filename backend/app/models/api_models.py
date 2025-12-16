@@ -1,6 +1,7 @@
 from pydantic import BaseModel
-from typing import List, Dict, Any, Optional
+from typing import List, Optional
 
+# ---------------------- Ingestion ----------------------
 class IngestFile(BaseModel):
     path: str
     content: str
@@ -13,12 +14,14 @@ class IngestResponse(BaseModel):
     ingested_count: Optional[int] = None
     message: str
 
+# ---------------------- Embeddings ----------------------
 class EmbedRequest(BaseModel):
     text: str
 
 class EmbedResponse(BaseModel):
     embedding: List[float]
 
+# ---------------------- Query ----------------------
 class QueryFilter(BaseModel):
     chapter: Optional[str] = None
     section: Optional[str] = None
@@ -30,7 +33,9 @@ class QueryRequest(BaseModel):
     filters: Optional[QueryFilter] = None
 
 class QueryResultMetadata(BaseModel):
-    chapter: str
+    module: int
+    chapter_number: int
+    chapter_title: str
     section: str
     url: str
 
@@ -43,6 +48,7 @@ class QueryResult(BaseModel):
 class QueryResponse(BaseModel):
     results: List[QueryResult]
 
+# ---------------------- Chat ----------------------
 class ChatMessage(BaseModel):
     role: str
     content: str
@@ -53,7 +59,9 @@ class ChatRequest(BaseModel):
     chat_history: Optional[List[ChatMessage]] = None
 
 class ChatCitation(BaseModel):
-    chapter: str
+    module: int
+    chapter_number: int
+    chapter_title: str
     section: str
     url: str
 

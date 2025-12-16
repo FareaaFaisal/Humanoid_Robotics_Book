@@ -1,68 +1,95 @@
 import os
 from typing import List, Dict, Any
-from qdrant_client import QdrantClient, models
+from qdrant_client import QdrantClient
+from qdrant_client.models import VectorParams, Distance, Batch, Filter, FieldCondition, Range
 
 class QdrantService:
     def __init__(self):
         self.qdrant_url = os.getenv("QDRANT_HOST")
         self.qdrant_api_key = os.getenv("QDRANT_API_KEY")
         if not self.qdrant_url or not self.qdrant_api_key:
-            raise ValueError("QDRANT_HOST and QDRANT_API_KEY environment variables must be set.")
-        
-        self.client = QdrantClient(
-            url=self.qdrant_url, 
-            api_key=self.qdrant_api_key
-        )
+            raise ValueError("QDRANT_HOST and QDRANT_API_KEY must be set.")
+
+        self.client = QdrantClient(url=self.qdrant_url, api_key=self.qdrant_api_key)
         self.collection_name = "docusaurus_chunks"
 
     def create_collection(self, vector_size: int):
-        """Creates the Qdrant collection if it doesn't already exist."""
-        try:
-            self.client.get_collection(collection_name=self.collection_name)
+        if self.client.collection_exists(self.collection_name):
             print(f"Collection '{self.collection_name}' already exists.")
-        except Exception:
-            print(f"Collection '{self.collection_name}' not found, creating it...")
-            self.client.recreate_collection(
+        else:
+            print(f"Creating collection '{self.collection_name}'...")
+            self.client.create_collection(
                 collection_name=self.collection_name,
-                vectors_config=models.VectorParams(size=vector_size, distance=models.Distance.COSINE),
+                vectors_config=VectorParams(size=vector_size, distance=Distance.COSINE),
             )
-            print(f"Collection '{self.collection_name}' created.")
+            print("Collection created.")
 
-    def upsert_vectors(self, vectors: List[List[float]], payloads: List[Dict[str, Any]], ids: List[str]):
-        """Upserts (inserts or updates) vectors and their payloads into Qdrant."""
+    def upsert_vectors(
+        self, 
+        vectors: List[List[float]], 
+        payloads: List[Dict[str, Any]], 
+        ids: List[str]
+    ):
+        """Insert vectors with payload into Qdrant."""
         self.client.upsert(
             collection_name=self.collection_name,
-            points=models.Batch(ids=ids, vectors=vectors, payloads=payloads),
-            wait=True
+            points=Batch(ids=ids, vectors=vectors, payloads=payloads),
+            wait=True,
         )
 
-    def search_vectors(self, query_vector: List[float], limit: int = 5, min_score: float = 0.1) -> List[Dict[str, Any]]:
-        """Search vectors using v1.16.1 QdrantClient."""
+    def query_by_vector(
+        self,
+        query_vector: List[float],
+        limit: int = 5,
+        min_score: float = 0.0,
+        filters: Dict[str, Any] = None,
+    ) -> List[Dict[str, Any]]:
+        """
+        Query collection by vector using query_points.
+        Applies optional metadata filters.
+        Returns points with metadata and score.
+        """
+        q_filter = None
+        if filters:
+            must_conditions = []
+            for k, v in filters.items():
+                must_conditions.append(
+                    FieldCondition(
+                        key=k,
+                        match={"value": v}
+                    )
+                )
+            if must_conditions:
+                q_filter = Filter(must=must_conditions)
+
         try:
-            # Correct search method for v1.16.1
-            hits = self.client.search(
+            response = self.client.query_points(
                 collection_name=self.collection_name,
-                query_vector=query_vector,
+                query=query_vector,
                 limit=limit,
+                with_payload=True,
+                with_vectors=False,
                 score_threshold=min_score,
-                query_filter=None  # optional filter if needed later
+                query_filter=q_filter
             )
 
-            results = [
-                {
+            results = []
+            for hit in response.points:
+                payload = hit.payload or {}
+                results.append({
                     "id": hit.id,
-                    "text": hit.payload.get("text") if hit.payload else None,
+                    "text": payload.get("text", ""),
                     "score": hit.score,
                     "metadata": {
-                        "chapter": hit.payload.get("chapter") if hit.payload else None,
-                        "section": hit.payload.get("section") if hit.payload else None,
-                        "url": hit.payload.get("url") if hit.payload else None,
-                    },
-                }
-                for hit in hits
-            ]
+                        "module": payload.get("module", 0),
+                        "chapter_number": payload.get("chapter_number", 0),
+                        "chapter_title": payload.get("chapter_title", "Unknown Chapter"),
+                        "section": payload.get("section", "Unknown Section"),
+                        "url": payload.get("url", "#")
+                    }
+                })
             return results
 
         except Exception as e:
-            print(f"Error during Qdrant search: {e}")
+            print(f"ERROR: Qdrant query failed → {e}")
             return []
