@@ -10,7 +10,7 @@ const RAGChatbotWidget: React.FC = () => {
   const [selectedText, setSelectedText] = useState('');
   const messagesEndRef = useRef<HTMLDivElement>(null);
 
-  const FASTAPI_BACKEND_URL = "https://fareaafaisal-chatbot.hf.space";
+  const FASTAPI_BACKEND_URL = "https://fareaafaisal-rag-final.hf.space";
 
   // ------------------- Scroll & selection handler -------------------
   useEffect(() => {
