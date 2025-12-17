@@ -13,9 +13,7 @@ from app.services.qdrant import QdrantService
 
 load_dotenv()
 
-# ---------------------- Helpers ----------------------
 def extract_structure_from_path(file_path: pathlib.Path):
-    """Extract module number, chapter number, and chapter title from path."""
     parts = file_path.parts
     module_num = None
     chapter_num = None
@@ -31,12 +29,7 @@ def extract_structure_from_path(file_path: pathlib.Path):
 
     return module_num or 0, chapter_num or 0, chapter_title
 
-def extract_text_and_metadata_from_mdx(
-    mdx_content: str,
-    file_path: pathlib.Path,
-    docs_root: pathlib.Path
-) -> Dict[str, Any]:
-    """Convert MDX to plain text with metadata."""
+def extract_text_and_metadata_from_mdx(mdx_content: str, file_path: pathlib.Path, docs_root: pathlib.Path) -> Dict[str, Any]:
     front_matter_match = re.match(r'^---\n(.*?)\n---\n', mdx_content, re.DOTALL)
     metadata = {}
     content = mdx_content
@@ -72,7 +65,6 @@ def extract_text_and_metadata_from_mdx(
         "url": url,
     }
 
-# ---------------------- Main Ingestion ----------------------
 async def ingest_docusaurus_content(docs_dir: str):
     cohere_embed_service = CohereEmbedService()
     qdrant_service = QdrantService()
@@ -88,9 +80,7 @@ async def ingest_docusaurus_content(docs_dir: str):
         with open(file_path, "r", encoding="utf-8") as f:
             mdx_content = f.read()
 
-        extracted = extract_text_and_metadata_from_mdx(
-            mdx_content, file_path, docs_root_path
-        )
+        extracted = extract_text_and_metadata_from_mdx(mdx_content, file_path, docs_root_path)
         if not extracted["text"]:
             continue
 
@@ -105,17 +95,15 @@ async def ingest_docusaurus_content(docs_dir: str):
             },
         )
 
-        embeddings = await cohere_embed_service.embed_text(
-            [c["text"] for c in chunks]
-        )
+        embeddings = await cohere_embed_service.embed_text([c["text"] for c in chunks])
 
         payloads = [
             {
                 "text": c["text"],
                 "module": c.get("module", 0),
                 "chapter_number": c.get("chapter_number", 0),
-                "chapter_title": c.get("chapter_title", "Unknown Chapter"),
-                "section": c.get("section", "Unknown Section"),
+                "chapter_title": c.get("chapter_title") or c.get("chapter") or c.get("section"),
+                "section": c.get("section", ""),
                 "url": c.get("url", "#"),
             }
             for c in chunks
@@ -127,7 +115,6 @@ async def ingest_docusaurus_content(docs_dir: str):
 
     print(f"\nTotal chunks ingested: {total_chunks_ingested}")
 
-# ---------------------- Run Script ----------------------
 if __name__ == "__main__":
     script_dir = os.path.dirname(__file__)
     docs_path = os.path.join(script_dir, "..", "humanoid-robotics-book", "docs")

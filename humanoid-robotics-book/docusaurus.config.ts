@@ -6,13 +6,13 @@ import type * as Preset from '@docusaurus/preset-classic';
 
 const config: Config = {
   title: 'Physical AI & Humanoid Robotics',
-  tagline:
-    'Unlock the future of intelligent machines: Master Humanoid Robotics, Physical AI, Simulation, and Next-Gen Autonomous Systems for a world where robots think, move, and act like us',
+  tagline: 'Unlock the future of intelligent machines: Master Humanoid Robotics, Physical AI, Simulation, and Next-Gen Autonomous Systems for a world where robots think, move, and act like us',
   favicon: 'img/favicon.ico',
 
   clientModules: [require.resolve('./src/components/RAGChatbotWidget/index.tsx')],
 
   // Production URL and base URL
+  url: 'https://example.com', // placeholder URL for Vercel
   baseUrl: '/',
 
   // GitHub pages deployment config
@@ -35,13 +35,11 @@ const config: Config = {
       {
         docs: {
           sidebarPath: './sidebars.ts',
-          editUrl:
-            'https://github.com/FareaaFaisal/Humanoid_Robotics_Book/edit/main/',
+          editUrl: 'https://github.com/FareaaFaisal/Humanoid_Robotics_Book/edit/main/',
         },
         blog: {
           showReadingTime: true,
-          editUrl:
-            'https://github.com/FareaaFaisal/Humanoid_Robotics_Book/edit/main/',
+          editUrl: 'https://github.com/FareaaFaisal/Humanoid_Robotics_Book/edit/main/',
           feedOptions: {
             type: ['rss', 'atom'],
             xslt: true,
@@ -99,10 +97,7 @@ const config: Config = {
           items: [
             { label: 'Modules', to: '/docs/robotic-nervous-system/intro-physical-ai' },
             { label: 'Blog', to: '/blog' },
-            {
-              label: 'GitHub Repo',
-              href: 'https://github.com/FareaaFaisal/Humanoid_Robotics_Book',
-            },
+            { label: 'GitHub Repo', href: 'https://github.com/FareaaFaisal/Humanoid_Robotics_Book' },
           ],
         },
         {

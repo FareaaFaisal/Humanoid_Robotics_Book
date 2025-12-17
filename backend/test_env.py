@@ -1,7 +1,5 @@
-import os
-from dotenv import load_dotenv
+from cohere import Client
 
-load_dotenv()
-
-print("QDRANT_HOST =", os.getenv("QDRANT_HOST"))
-print("QDRANT_API_KEY =", os.getenv("QDRANT_API_KEY"))
+co = Client("QvVF3yX1mjT7VGCQOwcmR6BMG8pxBFPn3P6toMDk")
+resp = co.embed(model="embed-english-v2.0", texts=["Hello world!"])
+print(resp.embeddings)
